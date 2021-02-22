@@ -1,4 +1,4 @@
-package SpokesChallenge.JsonProject;
+package spokesChallenge.jsonReading.main;
 
 import static org.junit.Assert.assertTrue;
 
