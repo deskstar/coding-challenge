@@ -1,0 +1,49 @@
+Hello, my name is Johnny, thank you for reviewing this piece of work, all of my deliverables are inside folder JsonProject.
+
+Here are some instructions
+
+
+Using Docker (Recommend)
+
+Prerequisites Docker Desktop (Windows) 2.3.05 or above
+(Didn't test on Mac/ Linux, but suppose they should work too)
+
+1. Open your command prompt in \JsonProject (as the Dockerfile inside)
+
+2. ***Build Docker Image***
+docker image build -t docker-9spokes-json-challenge .
+
+3. ***Run the program (inside the docker) to read the JSON and do the calculation***
+docker run -v <Your JSON file path>:/build/target/data.json docker-9spokes-json-challenge data.json
+
+For example, my JSON file located in C:\docker\sampleData.json, so the command would be:
+docker run -v C:\docker\sampleData.json:/build/target/data.json docker-9spokes-json-challenge data.json
+
+***Run the program with the default JSON file provided by 9Spokes in github***
+docker run docker-9spokes-json-challenge 
+
+4. ***Unit test will be running automatically when building the image***
+
+
+Using Maven 
+
+Prerequisites Java 8 and Maven 3
+(Tested with Maven 3.6, but suppose most maven version would work, unless very old)
+
+1. Open your command prompt in \JsonProject (as the pom.xml inside)
+
+2. Run the unit test
+mvn test 
+
+3. Compile and package to an executable jar
+mvn clean compile assembly:single
+
+4. Execute the program, provided the JSON file path as argument
+java -jar target/JsonProject-0.0.1-SNAPSHOT-jar-with-dependencies.jar sampleData.json
+
+if you provide the JSON file with absolute path, and your path contains space, 
+please replace the space with '%20' or just put the JSON file inside the \JsonProject
+
+For example
+C:\Users\Johnny Lai\sampleData.json replace the space and become
+C:\Users\Johnny%20Lai\sampleData.json
