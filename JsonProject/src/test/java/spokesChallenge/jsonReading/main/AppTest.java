@@ -6,8 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
+
 import java.net.URLDecoder;
 import java.util.List;
 
@@ -43,8 +42,8 @@ public class AppTest
         ClassLoader classLoader = this.getClass().getClassLoader();
         
         File file = new File(classLoader.getResource("testData.json").getFile());
-        //handle special character in file path, such as space
         
+        //handle special character in file path, such as space        
         String path = URLDecoder.decode(file.getAbsolutePath(), "UTF-8");
         
         ObjectMapper mapper = new ObjectMapper();
@@ -56,6 +55,10 @@ public class AppTest
         
         Account account = data.get(0);
         
+        //5 account records in sample data
+        assertTrue(data.size() == 5);
+        
+        //test the constant value and the reading of each field in account record
         assertTrue(account.getCategory().equals(JsonAttributes.ACCOUNT_CATEGORY_REVENUE));
         assertTrue(account.getCode().equals("200"));
         assertTrue(account.getCurrency().equals("AUD"));

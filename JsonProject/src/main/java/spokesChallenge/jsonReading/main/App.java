@@ -3,6 +3,8 @@ package spokesChallenge.jsonReading.main;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,7 +22,7 @@ public class App
     public static void main( String[] args ) throws IOException
     {
     	String filePath = "";
-    	File file = null;
+
     	Report obj = new Report();
     	ObjectMapper mapper = new ObjectMapper();
     	double revenue = 0;
@@ -31,19 +33,22 @@ public class App
     	double asset = 0;
     	double liability = 0;
     	double workingCapitalRatio = 0;
-    	
-        if (args.length == 1)
-        	filePath = args[0];
-        else	{
-    		filePath = "data.json";     	        	
-        }                                    
-		
-		file = new File("").getCanonicalFile();
+    	DecimalFormat valueFormatter = new DecimalFormat(JsonAttributes.ACCOUNT_VALUE_PATTERN);
+    	DecimalFormat percentFormatter = new DecimalFormat(JsonAttributes.ACCOUNT_PERCENTAGE_PATTERN);
 
-		obj = mapper.readValue(new File(filePath), Report.class);
-
-        //System.out.println(obj.getObjCat());
-        //List<Account> data = obj.getData();
+    	//argument for JSON file path
+        if (args.length == 1)	{
+        	filePath = URLDecoder.decode(args[0], "UTF-8");                                   
+        }
+        
+        try	{
+        	obj = mapper.readValue(new File(filePath), Report.class);
+        }	catch (IOException ioException)	{
+        	System.out.println("Cannot read JSON file properly");
+        	throw ioException;
+        }
+        
+        
         for(Account account : obj.getData()) {
         	//revenue
             if (account.getCategory().equals(JsonAttributes.ACCOUNT_CATEGORY_REVENUE))	{
@@ -79,7 +84,8 @@ public class App
             	}	else if (account.getValtype().equals(JsonAttributes.ACCOUNT_VALUE_TYPE_DEBIT))	{
             		liability = liability - account.getTotalVal();
             	}            	
-            }             
+            } 
+           
         }
         
         //gross profit margin (percentage)
@@ -91,11 +97,10 @@ public class App
         //working capital ratio (percentage)
         workingCapitalRatio = asset / liability;
 
-        System.out.println("totalSales " + totalSales);
-        System.out.println("revenue " + revenue);
-        System.out.println("expense " + expense);
-        System.out.println("grossProfitMargin " + grossProfitMargin);
-        System.out.println("netProfitMargin " + netProfitMargin);
-        System.out.println("workingCapitalRatio " +  workingCapitalRatio);
+        System.out.println("revenue " + valueFormatter.format(revenue));
+        System.out.println("expense " + valueFormatter.format(expense));
+        System.out.println("grossProfitMargin " + percentFormatter.format(grossProfitMargin));
+        System.out.println("netProfitMargin " + percentFormatter.format(netProfitMargin));
+        System.out.println("workingCapitalRatio " +  percentFormatter.format(workingCapitalRatio));
     }
 }

@@ -14,5 +14,6 @@ public class JsonAttributes {
     	public final static String ACCOUNT_VALUE_TYPE_CREDIT = "credit";
     	public final static String ACCOUNT_VALUE_TYPE_DEBIT = "debit";
     	public final static String ACCOUNT_STATUS_ACTIVE = "ACTIVE";
-    	
+    	public final static String ACCOUNT_VALUE_PATTERN = "$###,###";
+    	public final static String ACCOUNT_PERCENTAGE_PATTERN = "###,###%";
 }

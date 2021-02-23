@@ -2,10 +2,11 @@ package spokesChallenge.jsonReading.obj;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+
+/*Java Object defined according the provided JSON file*/
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "account_category", "account_code", "account_currency", "account_identifier", "account_status", "value_type", "account_name", "account_type", "account_type_bank", "system_account", "total_value" })
 public class Account {
 
 	@JsonProperty("account_category")
